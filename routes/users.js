@@ -6,12 +6,16 @@ const Users= require('../models/Users')
 const upload=require('../helper/imageWriter')
 const jwt_decode=require('jwt-decode')
 const fs=require('fs')
+const { token } = require('morgan')
+
+
 /* GET users listing. */
 router.get('/', function (req, res) {
   Users.find({},(err,user)=>{
     res.json(user)
   })
 })
+
 
 
 //use for register 
@@ -36,6 +40,7 @@ router.post('/register',upload.single('picture'), (req, res) => {
       })
   })
 })
+
 
 
 //use for login
@@ -76,6 +81,7 @@ router.post('/login',(req,res)=>{
 })
 
 
+
 //update all user information route
 router.put('/update', upload.single('picture'),async (req,res)=>{
   let update = req.body
@@ -88,7 +94,6 @@ router.put('/update', upload.single('picture'),async (req,res)=>{
       fs.unlinkSync(user.picture)
     })
   }
-
 
   //use update password and crypt it
   if(update.password)
@@ -117,6 +122,17 @@ router.put('/update', upload.single('picture'),async (req,res)=>{
     })
 })
 
+
+
+// delete profile photos
+router.delete('/deleteProfilePhoto/:token',()=>{
+  const userid=jwt_decode(token).userid
+
+  Users.findOne({userid},(err,user)=>{
+    fs.unlinkSync(user.picture)
+  })
+
+})
 
 
 module.exports = router

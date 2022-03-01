@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const userSchema = new Schema({
   user_id: Schema.Types.ObjectId,
@@ -26,9 +26,10 @@ const userSchema = new Schema({
   },
 
   picture: {
-    type: Image,
+    type: Buffer,
     required: false,
+    contentType:String
   },
-});
+})
 
-module.exports = mongoose.model("register", userSchema);
+module.exports = mongoose.model('register', userSchema)

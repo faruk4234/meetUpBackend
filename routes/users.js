@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
 router.post('/register',upload.single('picture'), (req, res) => {
   const register = req.body
 
-  bycrypt.hash(register.password,20).then((hash)=>{
+  bycrypt.hash(register.password,10).then((hash)=>{
     const user=new Users({
       ...register,
       password:hash,
@@ -75,37 +75,38 @@ router.post('/login',(req,res)=>{
   })
 })
 
-router.put('/update', upload.single('picture'),(req,res,next)=>{
-  const update = req.body
-  console.log(update)
+
+//update all user information route
+router.put('/update', upload.single('picture'),async (req,res)=>{
+  let update = req.body
   const userid=jwt_decode(update.token).userid
 
-  
+  //use profile picture update and delete old one
+  if(req.file){
+    update.picture=req.file.path 
+    Users.findOne({userid},(err,user)=>{
+      fs.unlinkSync(user.picture)
+    })
+  }
+
+
+  //use update password and crypt it
+  if(update.password)
+  {
+    await bycrypt.hash(update.password,10).then((password)=>{
+      update.password=password
+    })
+  }
+
+
   const promise = Users.findByIdAndUpdate(
     userid,
-    { $set: { ...update } },
+    {
+      $set: { ...update } },
     {
       new: true,
     }
   )
-    
-  //crypt password and update
-  if(update.password){
-    bycrypt.hash(update.password,20).then((hash)=>{
-      Users.findByIdAndUpdate(userid,
-        {
-          $set:{password:hash} },
-        {
-          new:true
-        })
-    })
-  }
-
-  //update picture
-  if(update.picture){
-
-    //
-  }
 
   promise
     .then((data) => {

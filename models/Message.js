@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const moment = require('moment')
 
 const messageSchema = new Schema({
   message_id:Schema.Types.ObjectId,
@@ -11,11 +10,13 @@ const messageSchema = new Schema({
   },
 
   message_sendid:{
-    type:String
+    type:String,
+    required:true
   },
 
   message_sourceid:{
     type:String,
+    required:true
   },
 
   message_sendTime:{

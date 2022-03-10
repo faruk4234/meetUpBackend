@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const connectURL = "mongodb://localhost/meetUpBackend";
+const mongoose = require('mongoose')
+const connectURL = 'mongodb://localhost/meetUpBackend'
 
 module.exports = () => {
   mongoose
@@ -8,9 +8,9 @@ module.exports = () => {
       useUnifiedTopology: true,
     })
     .then(() => {
-      console.log("mongo db connection is succsesfuly");
+      console.log('mongo db connection is succsesfuly')
     })
     .catch((err) => {
-      console.log(err);
-    });
-};
+      console.log(err)
+    })
+}

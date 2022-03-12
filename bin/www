@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const app = require('../app')
+const app = require('../app').app
 const debug = require('debug')('meetupbackend:server')
 const http = require('http')
 
@@ -12,14 +12,14 @@ const http = require('http')
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3003')
+const port = normalizePort(process.env.PORT || '3001')
 app.set('port', port)
 
 /**
  * Create HTTP server.
  */
 
-const server = http.createServer(app)
+const server =require('../app.js').server
 
 /**
  * Listen on provided port, on all network interfaces.

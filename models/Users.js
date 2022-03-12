@@ -31,6 +31,12 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+
+  status:{
+    type:Boolean,
+    required:false,
+    default:false
+  }
 })
 
 module.exports = mongoose.model('register', userSchema)

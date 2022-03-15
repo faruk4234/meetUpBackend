@@ -6,8 +6,13 @@ const logger = require('morgan')
 const http=require('http')
 
 
-const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const messageRouter = require('./routes/message')
+
+
+//midleware
+const verify_token= require('./middleware/verify-token')
+
 const config =require('./config')
 const app = express()
 
@@ -19,9 +24,11 @@ let io=require('socket.io')(server)
 const db = require('./helper/db')
 db()
 
+let onlineUsers = {}
+
 //socket io 
-const mySocket=require('./socket/TrySocket')
-mySocket(io)
+const mySocket=require('./socket')
+mySocket(io,onlineUsers)
 
 // view engine setup
 app.set('api_secret_key', config.api_secret_key)
@@ -35,8 +42,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
-app.use('/user', usersRouter)
+app.use('/user', usersRouter) //user routes
+app.use('/verify',verify_token) // middlewware token
+app.use('/message',messageRouter) //message routes
 
 //using for socket io app use
 app.use(function(req, res, next){

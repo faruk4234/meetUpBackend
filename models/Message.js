@@ -6,26 +6,24 @@ const messageSchema = new Schema({
 
   message:{
     type:String,
-    maxlength:2000
+    maxlength:2000,
+    minlength:1,
   },
 
-  message_sendid:{
+  sendid:{
     type:String,
     required:true
   },
 
-  message_sourceid:{
+  sourceid:{
     type:String,
     required:true
   },
 
-  message_sendTime:{
+  sendTime:{
     type:String
   },
-  time:{
-    type:String,
 
-  }
 })
 
 module.exports=mongoose.model('messages',messageSchema)

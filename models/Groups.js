@@ -22,6 +22,10 @@ const GroupSchema = new Schema({
 
   groupMesaages:{
     type:Array,
+  },
+  
+  everyoneAcces:{
+    type:Boolean
   }
 
 

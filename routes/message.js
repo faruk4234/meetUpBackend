@@ -3,6 +3,7 @@ const router = express.Router()
 
 const message = require('../models/Message')
 
+//send message
 router.post('/sendMessage',(req,res)=>{
   const messageData = req.body
     

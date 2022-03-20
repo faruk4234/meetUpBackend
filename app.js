@@ -8,7 +8,7 @@ const http=require('http')
 
 const usersRouter = require('./routes/users')
 const messageRouter = require('./routes/message')
-
+const groupRouter = require('./routes/group')
 
 //midleware
 const verify_token= require('./middleware/verify-token')
@@ -45,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/user', usersRouter) //user routes
 app.use('/verify',verify_token) // middlewware token
 app.use('/message',messageRouter) //message routes
+app.use('/group',groupRouter)// grouproter
 
 //using for socket io app use
 app.use(function(req, res, next){

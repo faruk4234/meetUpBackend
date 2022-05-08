@@ -21,12 +21,11 @@ router.get('/', function (req, res) {
 //use for register 
 router.post('/register',upload.single('picture'), (req, res) => {
   const register = req.body
-
+  console.log(register)
   bycrypt.hash(register.password,10).then((hash)=>{
     const user=new Users({
       ...register,
       password:hash,
-      picture:req.file.path,
     })
 
     const promise = user.save()
@@ -80,10 +79,9 @@ router.post('/login',(req,res)=>{
   })
 })
 
-
-
 //update all user information route
 router.put('/update', upload.single('picture'),async (req,res)=>{
+  console.log(req.body)
   let update = req.body
   const userid=jwt_decode(update.token).userid
 

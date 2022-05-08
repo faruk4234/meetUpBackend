@@ -21,4 +21,4 @@ router.post('/createGroup',(req,res)=>{
 
 })
 
-module.exports = group
+module.exports = router

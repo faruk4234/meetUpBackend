@@ -23,7 +23,6 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    maxlength:20,
     minlength:6
   },
 
@@ -36,6 +35,11 @@ const userSchema = new Schema({
     type:Boolean,
     required:false,
     default:false
+  },
+  friends:{
+    type:Array,
+    required:false,
+    default:[]
   }
 })
 
